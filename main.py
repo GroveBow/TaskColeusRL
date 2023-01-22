@@ -1,9 +1,3 @@
-n, m = 4, 6
-list_rect_poliominos = [[(3, 3), 3]]
-list_p_poliominos = [[(3, 4), 1], [(2, 3), 1]]
-
-list_rects = [[(max(n, m), min(n, m)), n * m]]  # список доступных прямоугольников
-
 """
 Алгоритм: Представляем свободные поля как набор прямоугольников. Сначала размещаем П-полиомино, затем прямоугольные.
 При размещении полиомино делят прямоугольник на набор меньших прямоугольников. Большой прямоугольник из массива удаляем,
@@ -77,7 +71,14 @@ def insert_poliominos(list_poliominos, list_rects):  # основная функ
         return [1, list_r]
 
 
+n, m = 4, 6
+list_rect_poliominos = [[(3, 3), 3]]
+list_p_poliominos = [[(3, 4), 1], [(2, 3), 1]]
+
+list_rects = [[(max(n, m), min(n, m)), n * m]]  # список доступных прямоугольников
+
 flag, list_rects = insert_poliominos(list_p_poliominos, list_rects)
+
 if flag:
     flag, list_rects = insert_poliominos(list_rect_poliominos, list_rects)
 

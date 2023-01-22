@@ -27,7 +27,7 @@ def added_rect(poliomino, rect):
     return ans
 
 
-def insert_poliominos(list_poliominos, list_rects):  # основная функция
+def insert_poliominos(list_poliominos, list_rects, type_pol):  # основная функция
     list_r = list_rects  # определяем списки полиомино и прямоугольников
     list_p = list_poliominos
     flag = False
@@ -41,11 +41,12 @@ def insert_poliominos(list_poliominos, list_rects):  # основная функ
                 for i in new_rect:  # вставляем новые внешние прямоугольники в общий список
                     if i[1] > 0:
                         list_r.append(i)
-                rect_insides = [  # для П-полиомино образовываем и вставляем в список внутренний прямоугольник
-                    (list_p[0][0][0] - 1, list_p[0][0][1] - 2),
-                    (list_p[0][0][0] - 1) * (list_p[0][0][1] - 2)]
-                if rect_insides[1] > 0:
-                    list_r.append(rect_insides)
+                if type_pol == "P":
+                    rect_insides = [  # для П-полиомино образовываем и вставляем в список внутренний прямоугольник
+                        (list_p[0][0][0] - 1, list_p[0][0][1] - 2),
+                        (list_p[0][0][0] - 1) * (list_p[0][0][1] - 2)]
+                    if rect_insides[1] > 0:
+                        list_r.append(rect_insides)
 
                 list_r = sorted(list_r, reverse=False, key=lambda x: x[1])  # сортируем список доступных прямоугольников
                 rect_founded = True
@@ -71,16 +72,16 @@ def insert_poliominos(list_poliominos, list_rects):  # основная функ
         return [1, list_r]
 
 
-n, m = 4, 6
-list_rect_poliominos = [[(3, 3), 3]]
-list_p_poliominos = [[(3, 4), 1], [(2, 3), 1]]
+n, m = 4, 3
+list_rect_poliominos = [[(2, 2), 1]]
+list_p_poliominos = [[(3, 4), 1]]
 
 list_rects = [[(max(n, m), min(n, m)), n * m]]  # список доступных прямоугольников
 
-flag, list_rects = insert_poliominos(list_p_poliominos, list_rects)
+flag, list_rects = insert_poliominos(list_p_poliominos, list_rects, type_pol='P')
 
 if flag:
-    flag, list_rects = insert_poliominos(list_rect_poliominos, list_rects)
+    flag, list_rects = insert_poliominos(list_rect_poliominos, list_rects, type_pol='R')
 
 if not flag:
     print("False")
